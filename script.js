@@ -7,9 +7,9 @@ console.log(subtract(2, 2));
 console.log(multiply(4, 4));
 console.log(divide(2, 2));
 
-console.log(operate(firstNum, secondNum, operator))
+console.log(operate(operator, firstNum, secondNum))
 
-function operate(firstNum, secondNum, operator) {
+function operate(operator, firstNum, secondNum) {
     switch (operator) {
         case '+':
             return add(firstNum, secondNum)
