@@ -29,6 +29,14 @@ function operate(operator, firstNum, secondNum) {
             return multiply(firstNum, secondNum)
         case '/':
             return divide(firstNum, secondNum)
+        case '^':
+            return Math.pow(firstNum, secondNum)
+        case '&#8730;':
+            return Math.sqrt(firstNum)
+        case '1/x':
+            return inverse(firstNum)
+        case '&plusmn;':
+            return negate(firstNum)
     }
 }
 
@@ -47,3 +55,28 @@ function multiply(num1, num2) {
 function divide(num1, num2) {
     return num1 / num2
 }
+
+function inverse(number) {
+    return 1/number
+}
+
+function negate(number) {
+    return -1 * number;
+}
+
+/* function percentage(operator, firstNum, secondNum) {
+    if (!secondNum) {
+        return 0
+    }
+    
+    switch (operator) {
+        case '+':
+            return add(firstNum, secondNum / firstNum * 100)
+        case '-':
+            return subtract(firstNum, secondNum / firstNum * 100)
+        case '*':
+            return multiply(firstNum, secondNum / 100)
+        case '/':
+            return divide(firstNum, secondNum / 100)
+    }
+} */
