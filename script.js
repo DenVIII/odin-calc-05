@@ -9,6 +9,16 @@ console.log(divide(2, 2));
 
 console.log(operate(operator, firstNum, secondNum))
 
+const currValDisplay = document.querySelector('.curr-value');
+const prevValDisplay = document.querySelector('.prev-value');
+const numberBtns = document.querySelectorAll('.number');
+
+numberBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+        currValDisplay.textContent += btn.textContent;
+    })
+});
+
 function operate(operator, firstNum, secondNum) {
     switch (operator) {
         case '+':
