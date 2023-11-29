@@ -38,7 +38,7 @@ function updateDisplay() {
         prevNum = parseFloat(prevValDisplay.textContent);
         operator = this.textContent;
     } else {
-        prevValDisplay.textContent = operate(operator, prevNum, currNum) + ' ' + this.textContent;
+        prevValDisplay.textContent = parseFloat(prevValDisplay.textContent) + ' ' + this.textContent;
         operator = this.textContent;
     }
 }
