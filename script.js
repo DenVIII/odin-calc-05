@@ -2,6 +2,7 @@ let prevNum = null;
 let currNum = null;
 let operator = null;
 
+
 const currValDisplay = document.querySelector('.curr-value');
 const prevValDisplay = document.querySelector('.prev-value');
 const maskValDisplay = document.querySelector('.mask-value');
@@ -21,45 +22,44 @@ operatorBtns.forEach((btn) => {
 })
 
 function updateDisplay() {
-    if (prevNum === null) {
+    if (currNum === null && prevNum === null) {
+        return;
+    } else if (prevNum === null) {
         prevValDisplay.textContent = currValDisplay.textContent + ' ' + this.textContent;
-        maskValDisplay.textContent = currValDisplay.textContent;
-        currValDisplay.textContent = '';
-
         prevNum = currNum;
-        currNum = null;
+        clearCurrValue();
         operator = this.textContent;
     } else if (currNum !== null) {
-        prevValDisplay.textContent = operate(operator, prevNum, currNum) + ' ' + this.textContent;
-        maskValDisplay.textContent = currValDisplay.textContent;
-        currValDisplay.textContent = '';
-        currNum = null;
-
-        prevNum = parseFloat(prevValDisplay.textContent);
-        operator = this.textContent;
+        prevNum = parseFloat(operate(operator, prevNum, currNum));
+        if (isNaN(prevNum)) {
+            clearAll()
+            maskValDisplay.textContent = 'Invalid input';
+        } else {
+            prevValDisplay.textContent = prevNum + ' ' + this.textContent;
+            clearCurrValue();
+            operator = this.textContent;
+        }
     } else {
         prevValDisplay.textContent = parseFloat(prevValDisplay.textContent) + ' ' + this.textContent;
         operator = this.textContent;
     }
 }
 
-/* function updateDisplay() {
-    if (prevNum === null && currNum === null) {
-        prevValDisplay.textContent = currValDisplay.textContent + ' ' + this.textContent;
-        prevNum = parseFloat(currValDisplay.textContent);
-        operator = this.textContent;
-        currValDisplay.textContent = '';
-    } else {
-        currNum = parseFloat(currValDisplay.textContent)
-        currValDisplay.textContent = operate(operator, prevNum, currNum);
-        prevValDisplay.textContent = currValDisplay.textContent + this.textContent;
-        prevNum = currNum = parseFloat(prevValDisplay.textContent);
-        currValDisplay.textContent = '';
-    }
-} */
+function clearCurrValue() {
+    maskValDisplay.textContent = currValDisplay.textContent;
+    currValDisplay.textContent = '';
+    currNum = null;
+}
+
+function clearAll() {
+    currValDisplay.textContent = '';
+    prevValDisplay.textContent = '';
+    maskValDisplay.textContent = '';
+    prevNum = null;
+    currNum = null;
+}
 
 function operate(operator, prevNum, currNum) {
-    console.log(operator)
     switch (operator) {
         case '+':
             return add(prevNum, currNum)
@@ -93,7 +93,7 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
-    return num1 / num2
+    return num2 !== 0 ? num1 / num2 : 'Can\'t divide by zero'
 }
 
 function inverse(number) {
