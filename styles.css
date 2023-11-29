@@ -40,11 +40,11 @@ body {
     height: 140px;
     padding: 10px 5px;
 }
-.curr-value, .prev-value {
+.curr-value, .prev-value, .mask-value {
     text-align: end;
 }
 
-.curr-value {
+.curr-value, .mask-value {
     font-size: 36px;
     padding-right: 5px;
 }
