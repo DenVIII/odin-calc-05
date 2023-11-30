@@ -31,14 +31,21 @@ function updateDisplay() {
     //debugger;
     if (currNum === null && prevNum === null) {
         return;
-    } else if (prevNum === null) {
+    } 
+    else if (this.classList.contains('unary') && currNum !== null) {
+        currNum = operate(this.textContent, currNum);
+        currValDisplay.textContent = currNum;
+    }
+    else if (prevNum === null) {
         prevValDisplay.textContent = currValDisplay.textContent + ' ' + this.textContent;
         prevNum = currNum;
         clearCurrValue();
         operator = this.textContent;
-    } else if (currNum !== null) {
+    } 
+    else if (currNum !== null) {
         compute(this);
-    } else {
+    } 
+    else {
         prevValDisplay.textContent = parseFloat(prevValDisplay.textContent) + ' ' + this.textContent;
         operator = this.textContent;
     }
@@ -78,7 +85,7 @@ function clearAll() {
     currNum = null;
 }
 
-function operate(operator, prevNum, currNum) {
+function operate(operator, currNum, prevNum) {
     switch (operator) {
         case '+':
             return add(prevNum, currNum)
@@ -91,11 +98,11 @@ function operate(operator, prevNum, currNum) {
         case '^':
             return Math.pow(prevNum, currNum)
         case '√':
-            return Math.sqrt(prevNum)
+            return Math.sqrt(currNum)
         case '1/x':
-            return inverse(prevNum)
+            return inverse(currNum)
         case '±':
-            return negate(prevNum)
+            return negate(currNum)
     }
 }
 
