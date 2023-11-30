@@ -8,9 +8,13 @@ const prevValDisplay = document.querySelector('.prev-value');
 const maskValDisplay = document.querySelector('.mask-value');
 const numberBtns = document.querySelectorAll('.number');
 const operatorBtns = document.querySelectorAll('.operator');
+const equalsBtn = document.querySelector('.equals');
 
 numberBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
+        if (prevValDisplay.textContent[prevValDisplay.textContent.length - 1] === '=') {
+            clearAll();
+        }
         maskValDisplay.textContent = '';
         currValDisplay.textContent += btn.textContent;
         currNum = parseFloat(currValDisplay.textContent);
@@ -18,10 +22,13 @@ numberBtns.forEach((btn) => {
 });
 
 operatorBtns.forEach((btn) => {
-    btn.addEventListener('click', updateDisplay)
+    btn.addEventListener('click', updateDisplay);
 })
 
+equalsBtn.addEventListener('click', compute);
+
 function updateDisplay() {
+    //debugger;
     if (currNum === null && prevNum === null) {
         return;
     } else if (prevNum === null) {
@@ -30,23 +37,35 @@ function updateDisplay() {
         clearCurrValue();
         operator = this.textContent;
     } else if (currNum !== null) {
-        prevNum = parseFloat(operate(operator, prevNum, currNum));
-        if (isNaN(prevNum)) {
-            clearAll()
-            maskValDisplay.textContent = 'Invalid input';
-        } else {
-            prevValDisplay.textContent = prevNum + ' ' + this.textContent;
-            clearCurrValue();
-            operator = this.textContent;
-        }
+        compute(this);
     } else {
         prevValDisplay.textContent = parseFloat(prevValDisplay.textContent) + ' ' + this.textContent;
         operator = this.textContent;
     }
 }
 
+function compute(e) {
+    const oper =  e.textContent || this.textContent
+    if (currNum !== null && prevNum !== null) {
+        prevNum = parseFloat(operate(operator, prevNum, currNum));
+        if (isNaN(prevNum)) {
+            clearAll()
+            maskValDisplay.textContent = 'Invalid input';
+        } else {
+            prevValDisplay.textContent = prevNum + ' ' + oper;
+            console.log(prevValDisplay.textContent)
+            clearCurrValue();
+            if (oper !== '=') {
+                operator = oper;
+            } else {
+                operator = null; 
+            }
+        }
+    }
+}
+
 function clearCurrValue() {
-    maskValDisplay.textContent = currValDisplay.textContent;
+    maskValDisplay.textContent = prevNum;
     currValDisplay.textContent = '';
     currNum = null;
 }
