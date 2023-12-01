@@ -10,6 +10,7 @@ const operatorBtns = document.querySelectorAll('.operator');
 const equalsBtn = document.querySelector('.equals');
 const clearAllBtn = document.querySelector('.clear-all');
 const clearEntryBtn = document.querySelector('.clear-entry');
+const deleteLastCharBtn = document.querySelector('.delete');
 
 numberBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -32,9 +33,9 @@ operatorBtns.forEach((btn) => {
 equalsBtn.addEventListener('click', compute);
 clearAllBtn.addEventListener('click', clearAll);
 clearEntryBtn.addEventListener('click', clearEntry);
+deleteLastCharBtn.addEventListener('click', deleteLastChar);
 
 function updateDisplay() {
-    //debugger;
     if (currNum === null && prevNum === null) {
         return;
     } 
@@ -98,6 +99,23 @@ function clearEntry() {
     else if (currNum !== 0) {
         currValDisplay.textContent = '0';
         currNum = 0;
+    }
+}
+
+function deleteLastChar() {
+    if (operator === null && prevNum !== 0) {
+        clearAll();
+    } 
+    else if (currNum === 0) {
+        return;
+    }
+    else if (currValDisplay.textContent.length === 1) {
+        currValDisplay.textContent = '0';
+        currNum = 0;
+    }
+    else {
+        currValDisplay.textContent = currValDisplay.textContent.slice(0, currValDisplay.textContent.length - 1);
+        currNum = parseFloat(currValDisplay.textContent);
     }
 }
 
