@@ -104,15 +104,15 @@ function clearEntry() {
 function operate(operator, currNum, prevNum) {
     switch (operator) {
         case '+':
-            return add(prevNum, currNum)
+            return add(currNum, prevNum)
         case '−':
-            return subtract(prevNum, currNum)
+            return subtract(currNum, prevNum)
         case '×':
-            return multiply(prevNum, currNum)
+            return multiply(currNum, prevNum)
         case '÷':
-            return divide(prevNum, currNum)
+            return divide(currNum, prevNum)
         case '^':
-            return Math.pow(prevNum, currNum)
+            return Math.pow(currNum, prevNum)
         case '√':
             return Math.sqrt(currNum)
         case '1/x':
