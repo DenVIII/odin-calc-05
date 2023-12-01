@@ -1,7 +1,6 @@
 let prevNum = null;
-let currNum = null;
+let currNum = 0;
 let operator = null;
-
 
 const currValDisplay = document.querySelector('.curr-value');
 const prevValDisplay = document.querySelector('.prev-value');
@@ -10,11 +9,16 @@ const numberBtns = document.querySelectorAll('.number');
 const operatorBtns = document.querySelectorAll('.operator');
 const equalsBtn = document.querySelector('.equals');
 const clearAllBtn = document.querySelector('.clear-all');
+const clearEntryBtn = document.querySelector('.clear-entry');
 
 numberBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
         if (prevValDisplay.textContent[prevValDisplay.textContent.length - 1] === '=') {
             clearAll();
+        }
+        if (currNum === 0) {
+            currValDisplay.textContent = '';
+            currNum = null;
         }
         maskValDisplay.textContent = '';
         currValDisplay.textContent += btn.textContent;
@@ -25,10 +29,9 @@ numberBtns.forEach((btn) => {
 operatorBtns.forEach((btn) => {
     btn.addEventListener('click', updateDisplay);
 })
-
 equalsBtn.addEventListener('click', compute);
-
 clearAllBtn.addEventListener('click', clearAll);
+clearEntryBtn.addEventListener('click', clearEntry);
 
 function updateDisplay() {
     //debugger;
@@ -61,7 +64,8 @@ function compute(e) {
         if (isNaN(prevNum)) {
             clearAll()
             maskValDisplay.textContent = 'Invalid input';
-        } else {
+        } 
+        else {
             prevValDisplay.textContent = prevNum + ' ' + oper;
             clearCurrValue();
             if (oper !== '=') {
@@ -80,11 +84,21 @@ function clearCurrValue() {
 }
 
 function clearAll() {
-    currValDisplay.textContent = '';
+    currValDisplay.textContent = '0';
     prevValDisplay.textContent = '';
     maskValDisplay.textContent = '';
     prevNum = null;
-    currNum = null;
+    currNum = 0;
+}
+
+function clearEntry() {
+    if (operator === null) {
+        clearAll();
+    }
+    else if (currNum !== 0) {
+        currValDisplay.textContent = '0';
+        currNum = 0;
+    }
 }
 
 function operate(operator, currNum, prevNum) {
