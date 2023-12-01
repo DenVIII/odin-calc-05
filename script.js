@@ -9,6 +9,7 @@ const maskValDisplay = document.querySelector('.mask-value');
 const numberBtns = document.querySelectorAll('.number');
 const operatorBtns = document.querySelectorAll('.operator');
 const equalsBtn = document.querySelector('.equals');
+const clearAllBtn = document.querySelector('.clear-all');
 
 numberBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -26,6 +27,8 @@ operatorBtns.forEach((btn) => {
 })
 
 equalsBtn.addEventListener('click', compute);
+
+clearAllBtn.addEventListener('click', clearAll);
 
 function updateDisplay() {
     //debugger;
@@ -60,7 +63,6 @@ function compute(e) {
             maskValDisplay.textContent = 'Invalid input';
         } else {
             prevValDisplay.textContent = prevNum + ' ' + oper;
-            console.log(prevValDisplay.textContent)
             clearCurrValue();
             if (oper !== '=') {
                 operator = oper;
