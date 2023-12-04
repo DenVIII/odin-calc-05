@@ -11,13 +11,17 @@ const equalsBtn = document.querySelector('.equals');
 const clearAllBtn = document.querySelector('.clear-all');
 const clearEntryBtn = document.querySelector('.clear-entry');
 const deleteLastCharBtn = document.querySelector('.delete');
+const pointBtn = document.querySelector('.point');
 
 numberBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
+        if (currValDisplay.textContent.length === 16) {
+            return;
+        }
         if (prevValDisplay.textContent[prevValDisplay.textContent.length - 1] === '=') {
             clearAll();
         }
-        if (currNum === 0) {
+        if (currValDisplay.textContent === '0') {
             currValDisplay.textContent = '';
             currNum = null;
         }
@@ -34,6 +38,7 @@ equalsBtn.addEventListener('click', compute);
 clearAllBtn.addEventListener('click', clearAll);
 clearEntryBtn.addEventListener('click', clearEntry);
 deleteLastCharBtn.addEventListener('click', deleteLastChar);
+pointBtn.addEventListener('click', addDecimalPoint);
 
 function updateDisplay() {
     if (currNum === null && prevNum === null) {
@@ -117,6 +122,16 @@ function deleteLastChar() {
         currValDisplay.textContent = currValDisplay.textContent.slice(0, currValDisplay.textContent.length - 1);
         currNum = parseFloat(currValDisplay.textContent);
     }
+}
+
+function addDecimalPoint() {
+    if (currValDisplay.textContent.includes('.')) {
+        return;
+    }
+    else {
+        currValDisplay.textContent += '.';
+    }
+    
 }
 
 function operate(operator, currNum, prevNum) {
