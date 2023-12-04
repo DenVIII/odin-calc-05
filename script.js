@@ -15,7 +15,7 @@ const pointBtn = document.querySelector('.point');
 
 numberBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
-        if (currValDisplay.textContent.length === 16) {
+        if (currValDisplay.textContent.length === 14) {
             return;
         }
         if (prevValDisplay.textContent[prevValDisplay.textContent.length - 1] === '=') {
@@ -33,7 +33,7 @@ numberBtns.forEach((btn) => {
 
 operatorBtns.forEach((btn) => {
     btn.addEventListener('click', updateDisplay);
-})
+});
 equalsBtn.addEventListener('click', compute);
 clearAllBtn.addEventListener('click', clearAll);
 clearEntryBtn.addEventListener('click', clearEntry);
@@ -80,6 +80,24 @@ function compute(e) {
                 operator = null; 
             }
         }
+    }
+}
+
+function roundNumber(num) {
+    const maxNumLength = 14;
+    if (num.toString().length > maxNumLength) {
+        return parseFloat(num.toFixed(maxNumLength));
+    } else {
+        return num;
+    }
+}
+
+function expo(num) {
+    const numberOfDigits = 12;
+    if (num.toString().length > numberOfDigits) {
+        return parseFloat(num.toExponential(numberOfDigits));
+    } else {
+        return num;
     }
 }
 
@@ -131,28 +149,37 @@ function addDecimalPoint() {
     else {
         currValDisplay.textContent += '.';
     }
-    
 }
 
 function operate(operator, currNum, prevNum) {
+    let result;
     switch (operator) {
         case '+':
-            return add(currNum, prevNum)
+            result = add(currNum, prevNum);
+            break;
         case '−':
-            return subtract(currNum, prevNum)
+            result = subtract(currNum, prevNum);
+            break;
         case '×':
-            return multiply(currNum, prevNum)
+            result = multiply(currNum, prevNum);
+            break;
         case '÷':
-            return divide(currNum, prevNum)
+            result = divide(currNum, prevNum);
+            break;
         case '^':
-            return Math.pow(currNum, prevNum)
+            result = Math.pow(currNum, prevNum);
+            break;
         case '√':
-            return Math.sqrt(currNum)
+            result = Math.sqrt(currNum);
+            break;
         case '1/x':
-            return inverse(currNum)
+            result = inverse(currNum);
+            break;
         case '±':
-            return negate(currNum)
+            result = negate(currNum);
+            break;
     }
+    return expo(roundNumber(result));
 }
 
 function add(num1, num2) {
