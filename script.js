@@ -12,6 +12,7 @@ const clearAllBtn = document.querySelector('.clear-all');
 const clearEntryBtn = document.querySelector('.clear-entry');
 const deleteLastCharBtn = document.querySelector('.delete');
 const pointBtn = document.querySelector('.point');
+const percenteBtn = document.querySelector('.percentage');
 
 numberBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -39,14 +40,18 @@ clearAllBtn.addEventListener('click', clearAll);
 clearEntryBtn.addEventListener('click', clearEntry);
 deleteLastCharBtn.addEventListener('click', deleteLastChar);
 pointBtn.addEventListener('click', addDecimalPoint);
+percenteBtn.addEventListener('click', calcPercente);
 
 function updateDisplay() {
+    debugger;
     if (currNum === null && prevNum === null) {
         return;
     } 
-    else if (this.classList.contains('unary') && currNum !== null) {
-        currNum = operate(this.textContent, currNum);
-        currValDisplay.textContent = currNum;
+    else if (this.classList.contains('unary')) {
+        const num = currNum ?? prevNum ?? 0;
+        clearAll();
+        currNum = operate(this.textContent, num);
+        currValDisplay.textContent = expo(roundNumber(currNum));
     }
     else if (prevNum === null) {
         prevValDisplay.textContent = currValDisplay.textContent + ' ' + this.textContent;
@@ -64,7 +69,7 @@ function updateDisplay() {
 }
 
 function compute(e) {
-    const oper =  e.textContent || this.textContent
+    const oper =  e.textContent || this.textContent;
     if (currNum !== null && prevNum !== null) {
         prevNum = parseFloat(operate(operator, prevNum, currNum));
         if (isNaN(prevNum)) {
@@ -206,19 +211,25 @@ function negate(number) {
     return -1 * number;
 }
 
-/* function percentage(operator, prevNum, currNum) {
-    if (!currNum) {
-        return 0
+function calcPercente() {
+    if (!currNum || !prevNum || !operator) {
+        return;
     }
     
     switch (operator) {
         case '+':
-            return add(prevNum, currNum / prevNum * 100)
-        case '-':
-            return subtract(prevNum, currNum / prevNum * 100)
-        case '*':
-            return multiply(prevNum, currNum / 100)
-        case '/':
-            return divide(prevNum, currNum / 100)
+            currNum = expo(roundNumber(currNum / prevNum * 100));
+            break;
+        case '−':
+            currNum = expo(roundNumber(currNum / prevNum * 100));
+            break;
+        case '×':
+            currNum = expo(roundNumber(currNum / 100));
+            break;
+        case '÷':
+            currNum = expo(roundNumber(currNum / 100));
+            break;
     }
-} */
+
+    currValDisplay.textContent = currNum;
+} 
